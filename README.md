@@ -28,8 +28,7 @@ More details can be found in [BasicTS](https://github.com/GestaltCogTeam/BasicTS
    > **Public redistribution is temporarily unavailable** while we finalise an English-language licence.  
    > - **Status:** _under licence review_  
    > - **Expected release:** processed (anonymised) files and loading scripts will be hosted here once the review is complete.  
-   > - **Early access:** If your institution already has a data-sharing MoU with Shenzhen TU, please email **<2410263042@stumail.sztu.edu.cn>** with subject `MMTD Data     Request`, briefly stating affiliation and research purpose.
-
+   
 
 3. **File Structure:** After downloading, please place the data files in the `dataset/` directory and ensure the structure is as follows:
 
