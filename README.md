@@ -70,7 +70,7 @@ This repository contains the code necessary to reproduce the results presented i
 
 ####  **Table 3: Main Performance Comparison** 
 
-![image-20250703154316802](.\fig\performence_comp.png)
+![image-20250703154316802](./fig/performence_comp.png)
 
 Table 3 compares MM-DyGNN with eight baseline models across three prediction horizons. 
 
