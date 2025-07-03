@@ -191,7 +191,8 @@ The results from these runs will allow you to populate the ablation study result
 
 * **To reproduce Figure 8 :** It demonstrates the model's resilience to missing data by randomly masking input from spatial nodes and comparing the performance drop against strong baselines.
 
-* **Step 1: Run the robustness experiment with different mask ratio.**
+  * **Step 1: Run the robustness experiment with different mask ratio.**
+
 
   Modify Config File: Open `./MM_DyGNN/SZM.py` and change the value of the `mask_ratio` parameter to different number.
 
@@ -201,7 +202,7 @@ The results from these runs will allow you to populate the ablation study result
   python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
   ```
 
-* **Step 2: Plot the Attention Maps**
+  * **Step 2: Plot the Attention Maps**
 
   Record the performance of different mask and change the record `data_dict`,then plot the fig by:
 
@@ -210,6 +211,7 @@ The results from these runs will allow you to populate the ablation study result
   ```
 
   ![fig_8](./fig/fig_8.png)
+
 
 
 
