@@ -70,7 +70,7 @@ This repository contains the code necessary to reproduce the results presented i
 
 ####   **Table 3: Main Performance Comparison** 
 
-![image-20250703154316802](.\fig\performence_comp.png)
+![image-20250703154316802](./fig/performence_comp.png)
 
 To generate the data for this table, you need to train and evaluate both the baseline models and our MM-DyGNN model.
 
@@ -104,7 +104,7 @@ Table 4 evaluates the contribution of the dynamic graph constructor by comparing
     # change the parameter 'days' 
     python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
 
-​	The output will provide the performance metrics for the static graph version of MM-DyGNN.
+​		The output will provide the performance metrics for the static graph version of MM-DyGNN.
 
 ![image-20250703190923902](./fig/ablation_1.png)
 
@@ -146,7 +146,7 @@ You will need to run two separate experiments by modifying the configuration fil
 
 The results from these runs will allow you to populate the ablation study results in Table 5.
 
-![image-20250703191020299](G:\mypaper\publi_code\MM_DyGNN\fig\ablation_2.png)
+![image-20250703191020299](./fig/ablation_2.png)
 
 * **To reproduce Figure 6:** Run the hyperparameter analysis script for `k`. This script tests different values for `k` and plots the resulting MAE for each transport mode.
 
@@ -189,28 +189,27 @@ The results from these runs will allow you to populate the ablation study result
 
 #### Reproducing Robustness Analysis Figure
 
-* **To reproduce Figure 8 :**It demonstrates the model's resilience to missing data by randomly masking input from spatial nodes and comparing the performance drop against strong baselines.
+* **To reproduce Figure 8 :** It demonstrates the model's resilience to missing data by randomly masking input from spatial nodes and comparing the performance drop against strong baselines.
 
-  * **Step 1: Run the robustness experiment with different mask ratio.**
+* **Step 1: Run the robustness experiment with different mask ratio.**
 
-    Modify Config File: Open `./MM_DyGNN/SZM.py` and change the value of the `mask_ratio` parameter to different number.
+  Modify Config File: Open `./MM_DyGNN/SZM.py` and change the value of the `mask_ratio` parameter to different number.
 
-    the with this config file run:
+  the with this config file run:
 
-    ```bash
-    python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
-    ```
+  ```bash
+  python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
+  ```
 
-  * **Step 2: Plot the Attention Maps**
+* **Step 2: Plot the Attention Maps**
 
-    Record the performance of different mask and change the record `data_dict`,then plot the fig by:
+  Record the performance of different mask and change the record `data_dict`,then plot the fig by:
 
-    ```bash
-    python ./visualization/fig_8.py 
-    ```
+  ```bash
+  python ./visualization/fig_8.py 
+  ```
 
-    ![fig_8](./fig/fig_8.png)
-
+  ![fig_8](./fig/fig_8.png)
 
 
 
