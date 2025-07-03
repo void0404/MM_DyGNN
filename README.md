@@ -70,7 +70,7 @@ This repository contains the code necessary to reproduce the results presented i
 
 ####   **Table 3: Main Performance Comparison** 
 
-<div align="center">![image-20250703154316802](./fig/performence_comp.png)</div>
+![image-20250703154316802](./fig/performence_comp.png)
 
 To generate the data for this table, you need to train and evaluate both the baseline models and our MM-DyGNN model.
 
@@ -95,7 +95,7 @@ Table 4 evaluates the contribution of the dynamic graph constructor by comparing
 
 * **To reproduce Table 4** **：The performance of a static graph version of our model, you need to modify the configuration file.**
 
-  * **Step 1: Modify the Configuration**:** Open the configuration file: `./MM_DyGNN/SZM.py`. Find the `days` parameter and change its value to `1`. This forces the model to use a static graph instead of a dynamic one.
+  * **Step 1: Modify the Configuration**: Open the configuration file: `./MM_DyGNN/SZM.py`. Find the `days` parameter and change its value to `1`. This forces the model to use a static graph instead of a dynamic one.
 
   * **Step 2： Run the Experiment:** Execute the training script with the modified configuration.
 
@@ -106,7 +106,7 @@ Table 4 evaluates the contribution of the dynamic graph constructor by comparing
 
 ​		The output will provide the performance metrics for the static graph version of MM-DyGNN.
 
-<div align="center">![image-20250703190923902](./fig/ablation_1.png) </div>
+![image-20250703190923902](./fig/ablation_1.png)
 
 * **To reproduce Figure 5：**
 
@@ -146,7 +146,7 @@ You will need to run two separate experiments by modifying the configuration fil
 
 The results from these runs will allow you to populate the ablation study results in Table 5.
 
-<div align="center">![image-20250703191020299](./fig/ablation_2.png)</div>
+![image-20250703191020299](./fig/ablation_2.png)
 
 * **To reproduce Figure 6:** Run the hyperparameter analysis script for `k`. This script tests different values for `k` and plots the resulting MAE for each transport mode.
 
