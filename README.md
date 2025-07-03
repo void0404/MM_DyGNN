@@ -68,7 +68,7 @@ More details can be found in [BasicTS](https://github.com/GestaltCogTeam/BasicTS
 
 This repository contains the code necessary to reproduce the results presented in the paper "Adaptive dynamic graph learning to forecast urban demand for multimodal travels." This document provides a step-by-step guide to reproduce all tables and figures in Section 5.
 
-####  **Table 3: Main Performance Comparison** 
+####   **Table 3: Main Performance Comparison** 
 
 ![image-20250703154316802](.\fig\performence_comp.png)
 
@@ -93,35 +93,34 @@ After running these scripts, the console output will display the MAE and RMSE va
 
 Table 4 evaluates the contribution of the dynamic graph constructor by comparing it to a static graph version. Figure 5 visualizes the learned bus connectivity at different times of the day to illustrate the dynamic nature of the graph.
 
-To reproduce Table 4  the performance of a static graph version of our model, you need to modify the configuration file.
+* **To reproduce Table 4** **：The performance of a static graph version of our model, you need to modify the configuration file.**
 
-1. **Modify the Configuration:** Open the configuration file: `./MM_DyGNN/SZM.py`.
+  * **Step 1: Modify the Configuration**:** Open the configuration file: `./MM_DyGNN/SZM.py`. Find the `days` parameter and change its value to `1`. This forces the model to use a static graph instead of a dynamic one.
 
-2. **Set to Static Mode:** Find the `days` parameter and change its value to `1`. This forces the model to use a static graph instead of a dynamic one.
+  * **Step 2： Run the Experiment:** Execute the training script with the modified configuration.
 
-3. **Run the Experiment:** Execute the training script with the modified configuration.
+    ```bash
+    # Run the ablation study for the dynamic vs. static graph、
+    # change the parameter 'days' 
+    python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
 
-   ```
-   # Run the ablation study for the dynamic vs. static graph、
-   # change the parameter 'days' 
-   python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
-   ```
+​	The output will provide the performance metrics for the static graph version of MM-DyGNN.
 
-   The output will provide the performance metrics for the static graph version of MM-DyGNN.
+![image-20250703190923902](./fig/ablation_1.png)
 
-   ![image-20250703190923902](G:\mypaper\publi_code\MM_DyGNN\fig\ablation_1.png)
-
-To reproduce Figure 5：
+* **To reproduce Figure 5：**
 
 Use the plotting script to visualize the learned graph for the bus mode. This script loads the dynamic graph model to generate the heatmaps.
 
-``` bas
+``` bash
 python ./visualization/fig_5.py
 ```
 
+![fig_5](./fig/fig_5.png)
+
 #### Table 5 & Figures 6-7: Ablation Study and Case Study on SCMI Module
 
-**To reproduce Table 5**:This study analyzes the contribution of SCMI module. It compares the full model against two variants: one without top-k selection and another using simple summation instead of an attention mechanism.
+* **To reproduce Table 5**:This study analyzes the contribution of SCMI module. It compares the full model against two variants: one without top-k selection and another using simple summation instead of an attention mechanism.
 
 You will need to run two separate experiments by modifying the configuration file.
 
@@ -134,8 +133,6 @@ You will need to run two separate experiments by modifying the configuration fil
      ```
      python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
      ```
-
-     
 
 2. **Variant 2: Simple Summation Fusion**
 
@@ -151,7 +148,27 @@ The results from these runs will allow you to populate the ablation study result
 
 ![image-20250703191020299](G:\mypaper\publi_code\MM_DyGNN\fig\ablation_2.png)
 
+* **To reproduce Figure 6:** Run the hyperparameter analysis script for `k`. This script tests different values for `k` and plots the resulting MAE for each transport mode.
 
+  * **Step 1: Run the model with different $k$ value **
+
+    Modify Config File: Open `./MM_DyGNN/SZM.py` and change the value of the `k` parameter to different number.
+
+    the with this config file run:
+
+    ```bash
+    python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
+    ```
+
+  * **Step 2: Plot the Attention Maps **
+
+    run the scrips:
+
+    ```bash
+    python ./visualization/fig_6.py
+    ```
+
+    ![fig_6](./fig/fig_6.png)
 
 * **To reproduce Figure 7:** This process involves two steps: first, extracting the attention maps from the trained model using a hook function, and second, running the plotting script.
 
@@ -159,66 +176,41 @@ The results from these runs will allow you to populate the ablation study result
 
   To get the attention maps, you need to use a PyTorch hook to capture the intermediate outputs of the SCMI module during model inference. Add the following helper function to  `runner`  at  `./basicts/runners/runner_zoo`.
 
-  <details>
-    <summary>Usage of hook function to get Attention Map</summary>
-    ```python
-    def _create_hook(attention_maps, layer_name: str):
-      """Creates a hook function to capture the attention map."""
-      def hook(module, inputs, outputs):
-          """
-          The hook function itself.
-  
-          Args:
-              module: The layer being hooked.
-              inputs: The input to the layer.
-              outputs: The output from the layer.
-          """
-          # --- Key: How to extract the attention map from the outputs ---
-          # This depends on the return structure of your Attention layer's forward function.
-          # Common cases:
-          # 1. The output is the attention map itself.
-          # 2. The output is a tuple (features, attention_map).
-          # 3. The output is a dictionary {'features': ..., 'attention_map': ...}.
-  
-          # Example: Assume the Attention layer's forward function returns (features, attention_map)
-          # We assume the attention map is the second element of the tuple.
-          attn_map = outputs[1][:, 0, :, :]  # Select the attention map of the first head
-  
-          if attn_map is not None:
-              # Move the attention map to the CPU and detach it from the computation graph to save memory.
-              # Note: If you need to perform subsequent processing on the GPU, you can leave it there for now.
-              attention_maps[layer_name].append(attn_map.detach().cpu())
-      
-      # Return the actual hook function
-      return hook
-  	Before running inference, register this hook to the SCMI module of your trained model:
-       
-      # 'model' is your loaded MM-DyGNN model
-  	# 'scmi_layer' is the name of the Sparse Cross-Modal Interaction module in your model
-  	attention_maps = {'scmi_layer': []}
-  	hook_handle = model.scmi_layer.register_forward_hook(_create_hook(attention_maps, 'scmi_layer'))
-  
-  	# Run model inference/prediction here...
-  	# The `attention_maps` dictionary will now be populated.
-  
-  	# After inference, save the maps to a file.
-  	# import numpy as np
-  	# np.savez('attention_maps.npz', scmi_maps=attention_maps['scmi_layer'])
-  
-  	# Don't forget to remove the hook when you're done
-  	hook_handle.remove()
-    ```
-    
-  </details>
-
   * **Step 2: Plot the Attention Maps**
-
+  
     Once you have saved the attention maps, use the provided plotting script to generate the visualizations.
-
+  
     ```bash
     # Generate spatial distribution maps of attention weights
     python ./visualization/fig_7.py
     ```
+    
+    ![fig_7](./fig/fig_7.png)
+
+#### Reproducing Robustness Analysis Figure
+
+* **To reproduce Figure 8 :**It demonstrates the model's resilience to missing data by randomly masking input from spatial nodes and comparing the performance drop against strong baselines.
+
+  * **Step 1: Run the robustness experiment with different mask ratio.**
+
+    Modify Config File: Open `./MM_DyGNN/SZM.py` and change the value of the `mask_ratio` parameter to different number.
+
+    the with this config file run:
+
+    ```bash
+    python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
+    ```
+
+  * **Step 2: Plot the Attention Maps**
+
+    Record the performance of different mask and change the record `data_dict`,then plot the fig by:
+
+    ```bash
+    python ./visualization/fig_8.py 
+    ```
+
+    ![fig_8](./fig/fig_8.png)
+
 
 
 
