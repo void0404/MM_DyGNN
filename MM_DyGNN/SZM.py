@@ -52,6 +52,7 @@ MODEL_PARAM = {
     "K_`1": [1,4],  # Top-K attention
     "K_`2": [1,4],  # Top-K attention
     "K_`3": [2,3],  # Top-K attention
+    "fusion_way" : "add",  #add for simple addition,or delete if for SCMI moudle
 }
 
 NUM_EPOCHS = 500

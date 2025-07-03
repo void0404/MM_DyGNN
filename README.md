@@ -28,7 +28,7 @@ More details can be found in [BasicTS](https://github.com/GestaltCogTeam/BasicTS
    > **Public redistribution is temporarily unavailable** while we finalise an English-language licence.  
    > - **Status:** _under licence review_  
    > - **Expected release:** processed (anonymised) files and loading scripts will be hosted here once the review is complete.  
-   
+
 
 3. **File Structure:** After downloading, please place the data files in the `dataset/` directory and ensure the structure is as follows:
 
@@ -61,6 +61,61 @@ python experiments/train.py --cfg baselines/${MODEL}/SZM.py --gpus '0'
 ```
 
 More details can be found in [BasicTS](https://github.com/GestaltCogTeam/BasicTS).
+
+
+
+## 📈 Reproducing  Tables and Figures
+
+This repository contains the code necessary to reproduce the results presented in the paper "Adaptive dynamic graph learning to forecast urban demand for multimodal travels." This document provides a step-by-step guide to reproduce all tables and figures in Section 5.
+
+####  **Table 3: Main Performance Comparison** 
+
+![image-20250703154316802](.\fig\performence_comp.png)
+
+Table 3 compares MM-DyGNN with eight baseline models across three prediction horizons. 
+
+To reproduce this table: Run the main experiment script. This script will train and evaluate the proposed MM-DyGNN and all baseline models. The output will provide the  MAE and RMSE values needed to populate Table 3. 
+
+``` bash
+# Train and evaluate baseline models for the main comparison 
+python experiments/train.py --cfg baselines/{model_name}/{config_name}.py --gpus '{gpuid}'
+# Train and evaluate MM_DyGNN models for the main comparison
+python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
+```
+
+#### Table 4 & Figure 5: Ablation Study and Case Study on Dynamic Graph
+
+Table 4 evaluates the contribution of the dynamic graph constructor by comparing it to a static graph version. Figure 5 visualizes the learned bus connectivity at different times of the day to illustrate the dynamic nature of the graph.
+
+To reproduce Table 4:
+
+Change the parameter 'days' int the config file './MM_DyGNN/SZM.py' as 1 . This will execute MM-DyGNN with static graphs and report the performance metrics.
+
+```bas
+# Run the ablation study for the dynamic vs. static graph、
+# change the parameter 'days' 
+python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
+```
+
+To reproduce Figure 5：
+
+Use the plotting script to visualize the learned graph for the bus mode. This script loads the dynamic graph model to generate the heatmaps.
+
+``` bas
+python ./visualization/fig_5.py
+```
+
+#### Table 5 & Figures 6-7: Ablation Study and Case Study on SCMI Module
+
+To reproduce Table 5:
+
+Run the ablation script for the SCMI module. This will test three variants: the full model, one without top-k selection, and one that replaces attention with simple summation. Change the parameter 'k' value to None in config file './MM_DyGNN/SZM.py' .For full simple summation variants change the parameter “fusion way“.and train these variants with:
+
+```base
+python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
+```
+
+
 
 ## Citation
 
