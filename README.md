@@ -150,7 +150,7 @@ The results from these runs will allow you to populate the ablation study result
 
 * **To reproduce Figure 6:** Run the hyperparameter analysis script for `k`. This script tests different values for `k` and plots the resulting MAE for each transport mode.
 
-  * **Step 1: Run the model with different $k$ value **
+  * **Step 1: Run the model with different $k$ value**
 
     Modify Config File: Open `./MM_DyGNN/SZM.py` and change the value of the `k` parameter to different number.
 
@@ -160,7 +160,7 @@ The results from these runs will allow you to populate the ablation study result
     python experiments/train.py --cfg MM_DyGNN/SZM.py --gpus '{gpuid}'
     ```
 
-  * **Step 2: Plot the Attention Maps **
+  * **Step 2: Plot the Attention Maps**
 
     run the scrips:
 
