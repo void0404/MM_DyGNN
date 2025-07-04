@@ -64,7 +64,7 @@ More details can be found in [BasicTS](https://github.com/GestaltCogTeam/BasicTS
 
 ## 📈 Reproducing  Tables and Figures
 
-This repository contains the code necessary to reproduce the results presented in the paper "Adaptive dynamic graph learning to forecast urban demand for multimodal travels." This document `visualization\steps.md`provides a step-by-step guide to reproduce all tables and figures in Section 5.
+This repository contains the code necessary to reproduce the results presented in the paper "Adaptive dynamic graph learning to forecast urban demand for multimodal travels." This document `visualization\steps.md` provides a step-by-step guide to reproduce all tables and figures in Section 5.
 
 
 
