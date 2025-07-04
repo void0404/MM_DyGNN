@@ -44,7 +44,6 @@ MODEL_PARAM = {
     "days": 144,
     "dims": 32,
     "order": 2,
-    "in_dim": 1, # start conv 不统计时间使用1
     "attention_dim": 32,
     "feed_forward_dim": 512,
     "num_heads": 4,
