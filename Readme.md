@@ -24,10 +24,8 @@ More details can be found in [BasicTS](https://github.com/GestaltCogTeam/BasicTS
 ## 📦 Data Preparation
 
 1. **Data Availability**
-   > The *Shenzhen Multimodal Transport Demand Dataset* is collected under a joint agreement with the Shenzhen Transportation Bureau.  
-   > **Public redistribution is temporarily unavailable** while we finalise an English-language licence.  
-   > - **Status:** _under licence review_  
-   > - **Expected release:** processed (anonymised) files and loading scripts will be hosted here once the review is complete.  
+   > The original datasets used in this study are not publicly available due to data licensing and copyright restrictions.
+   > However, intermediate processed data that support the findings of this study are available from the corresponding author upon reasonable request.  
 
 
 3. **File Structure:** After downloading, please place the data files in the `dataset/` directory and ensure the structure is as follows:
